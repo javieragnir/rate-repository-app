@@ -3,13 +3,16 @@ import { Link } from 'react-router-native';
 import Text from './Text';
 
 const styles = StyleSheet.create({
+  padding: {
+    paddingHorizontal: 5,
+  },
   appbarText: {
     color: 'white',
   }
 })
 
 const AppBarTab = ({ text, link }) => (
-    <View>
+    <View style={styles.padding}>
       <Link to={link}>
         <>
           <Text style={styles.appbarText}>{text}</Text>
