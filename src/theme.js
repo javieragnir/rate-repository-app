@@ -3,7 +3,7 @@ const theme = {
     textPrimary: '#24292e',
     textSecondary: '#586069',
     primary: '#0366d6',
-    appBar: 'steelblue',
+    appBar: '#1da1f2',
     mainBackground: '#e1e4e8',
     repositoryItemBackground: 'white',
   },
