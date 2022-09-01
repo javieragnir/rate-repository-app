@@ -29,7 +29,7 @@ const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
     color === 'textSecondary' && styles.colorTextSecondary,
     color === 'primary' && style.colorPrimary,
     fontSize === 'subheading' && styles.fontSizeSubheading,
-    fontWeight === 'bold' && style.fontWeightBold,
+    fontWeight === 'bold' && styles.fontWeightBold,
     style,
   ];
 
