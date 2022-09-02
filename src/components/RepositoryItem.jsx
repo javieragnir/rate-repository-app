@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const RepositoryItem = ({ ownerAvatarUrl, fullName, description, forksCount, stargazersCount, ratingAverage, reviewCount }) => {
+const RepositoryItem = ({ ownerAvatarUrl, fullName, description, language, forksCount, stargazersCount, ratingAverage, reviewCount }) => {
   return (
     <View style={styles.itemContainer}>
       <View style={[styles.flexContainerRow, styles.largeBottomMartin]}>
@@ -56,7 +56,7 @@ const RepositoryItem = ({ ownerAvatarUrl, fullName, description, forksCount, sta
           <Text style={styles.bottomMargin} fontWeight="bold" fontSize="subheading" >{fullName}</Text>
           <Text style={styles.bottomMargin} color="textSecondary">{description}</Text>
           <View style={styles.languageTag}>
-            <Text style={styles.languageText}>Test</Text>
+            <Text style={styles.languageText}>{language}</Text>
           </View>
         </View>
       </View>
