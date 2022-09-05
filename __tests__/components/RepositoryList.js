@@ -1,6 +1,6 @@
 /* eslint-disable jest/expect-expect */
-import { render, fireEvent } from '@testing-library/react-native';
-import RepositoryList, { RepositoryListContainer } from '../src/components/RepositoryList';
+import { render } from '@testing-library/react-native';
+import { RepositoryListContainer } from '../src/components/RepositoryList';
 
 describe('RepositoryList', () => {
   describe('RepositoryListContainer', () => {
