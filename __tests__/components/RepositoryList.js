@@ -1,6 +1,6 @@
 /* eslint-disable jest/expect-expect */
 import { render } from '@testing-library/react-native';
-import { RepositoryListContainer } from '../src/components/RepositoryList';
+import { RepositoryListContainer } from '../../src/components/RepositoryList';
 
 describe('RepositoryList', () => {
   describe('RepositoryListContainer', () => {
@@ -47,9 +47,7 @@ describe('RepositoryList', () => {
           },
         ],
       };
-      const { debug, getAllByTestId } = render(<RepositoryListContainer repositories={repositories}/>)
-
-      debug()
+      const { getAllByTestId } = render(<RepositoryListContainer repositories={repositories}/>)
 
       const repositoryItems = getAllByTestId('repositoryItem');
       const [firstRepositoryItem, secondRepositoryItem] = repositoryItems;
