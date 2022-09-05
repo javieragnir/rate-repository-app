@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 
 const RepositoryItem = ({ ownerAvatarUrl, fullName, description, language, forksCount, stargazersCount, ratingAverage, reviewCount }) => {
   return (
-    <View style={styles.itemContainer}>
+    <View testID="repositoryItem" style={styles.itemContainer}>
       <View style={[styles.flexContainerRow, styles.largeBottomMartin]}>
         <Image source={{uri: `${ownerAvatarUrl}`}} style={styles.profileImage} />
         <View style={styles.flexContainer}>
@@ -72,7 +72,7 @@ const RepositoryItem = ({ ownerAvatarUrl, fullName, description, language, forks
 
 const RepositoryMetric = ({ number, text }) => {
   if (number >= 1000) {
-    number = (number / 1000).toFixed(1) + 'k'
+    number = (Math.round((number / 100)) / 10).toFixed(1) + 'k'
   }
 
   return (

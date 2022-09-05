@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
 
 const AppBar = () => {
   const { data } = useQuery(GET_ME);
-  const me = data.me;
+  
+  const me = (data && data.me);
 
   return (
   <View style={styles.container}>
