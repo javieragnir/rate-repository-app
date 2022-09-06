@@ -1,8 +1,6 @@
 import { Image, View, StyleSheet, Pressable } from 'react-native';
 import Text from './Text';
 import theme from '../theme';
-import { useParams } from 'react-router-native';
-import useRepository from '../hooks/useRepository';
 import * as Linking from 'expo-linking'
 
 const styles = StyleSheet.create({
@@ -107,14 +105,6 @@ const RepositoryMetric = ({ number, text }) => {
       <Text color="textSecondary">{text}</Text>
     </View>
   )
-}
-
-export const RepositoryView = () => {
-  let { id } = useParams();
-  
-  const { repository } = useRepository(id);
-
-  return <RepositoryItem {...repository} show={true} />
 }
 
 export default RepositoryItem;
