@@ -19,12 +19,15 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.textSecondary,
     borderWidth: 1,
     borderRadius: 4,
+    height: 60
   },
   submitButton: {
     padding: 10,
     backgroundColor: theme.colors.appBar,
     borderRadius: 4,
     alignItems: 'center',
+    justifyContent: 'center',
+    height: 60
   },
   loginButtonText: {
     color: 'white',

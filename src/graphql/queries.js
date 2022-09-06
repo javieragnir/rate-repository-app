@@ -24,11 +24,10 @@ export const GET_ME = gql`
 `
 
 export const GET_REPOSITORY = gql`
-  query GetRepository($id: String!) {
+  query GetRepository($id: ID!) {
     repository(id: $id) {
-      id
-      fullName
-      url
+      ...RepositoryItemDetails
     }
   }
+  ${REPOSITORY_ITEM_DETAILS}
 `

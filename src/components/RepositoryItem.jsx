@@ -1,6 +1,8 @@
-import { Image, View, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet, Pressable } from 'react-native';
 import Text from './Text';
 import theme from '../theme';
+import { useParams } from 'react-router-native';
+import useRepository from '../hooks/useRepository';
 
 const styles = StyleSheet.create({
   itemContainer: {
@@ -36,7 +38,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     padding: 6,
   },
-  languageText: {
+  whiteText: {
     color: 'white'
   },
   bottomMargin: {
@@ -44,10 +46,34 @@ const styles = StyleSheet.create({
   },
   largeBottomMartin: {
     marginBottom: 10,
-  }
+  },
+  button: {
+    padding: 10,
+    backgroundColor: theme.colors.appBar,
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 60
+  },
 })
 
-const RepositoryItem = ({ ownerAvatarUrl, fullName, description, language, forksCount, stargazersCount, ratingAverage, reviewCount }) => {
+const LinkButton = () => {
+  return(
+    <Pressable>
+      <Text fontSize="subheading" fontWeight="bold" style={styles.whiteText}></Text>
+    </Pressable>
+  )
+}
+
+export const RepositoryView = () => {
+  let { id } = useParams();
+  
+  const { repository } = useRepository(id);
+
+  return <RepositoryItem {...repository} show={true} />
+}
+
+const RepositoryItem = ({ ownerAvatarUrl, fullName, description, language, forksCount, stargazersCount, ratingAverage, reviewCount, show = false }) => {
   return (
     <View testID="repositoryItem" style={styles.itemContainer}>
       <View style={[styles.flexContainerRow, styles.largeBottomMartin]}>
@@ -56,7 +82,7 @@ const RepositoryItem = ({ ownerAvatarUrl, fullName, description, language, forks
           <Text style={styles.bottomMargin} fontWeight="bold" fontSize="subheading" >{fullName}</Text>
           <Text style={styles.bottomMargin} color="textSecondary">{description}</Text>
           <View style={styles.languageTag}>
-            <Text style={styles.languageText}>{language}</Text>
+            <Text style={styles.whiteText}>{language}</Text>
           </View>
         </View>
       </View>
@@ -66,6 +92,7 @@ const RepositoryItem = ({ ownerAvatarUrl, fullName, description, language, forks
         <RepositoryMetric number={reviewCount} text="Reviews"/>
         <RepositoryMetric number={ratingAverage} text="Rating"/>
       </View>
+      {show && <LinkButton />}
     </View>
   )
 }
