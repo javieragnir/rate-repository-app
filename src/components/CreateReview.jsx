@@ -97,7 +97,6 @@ const CreateReview = () => {
     try {
       const { data } = await mutate({ variables: { review }})
       console.log(data);
-      console.log(data.createReview.repository);
       navigate(`/repository/${data.createReview.repository.id}`);
     } catch (e) {
       console.log(e);

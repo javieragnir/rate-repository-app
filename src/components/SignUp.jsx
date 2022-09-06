@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import theme from '../theme';
 import { useNavigate } from 'react-router-native';
 import { useMutation } from '@apollo/client';
-import { CREATE_REVIEW } from '../graphql/mutations';
+import { CREATE_USER } from '../graphql/mutations';
 
 const styles = StyleSheet.create({
   padding: {
@@ -85,17 +85,19 @@ export const SignUpContainer = ({ onSubmit }) => {
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [mutate] = useMutation(CREATE_REVIEW);
+  const [mutate] = useMutation(CREATE_USER);
 
   const onSubmit = async values => {
+    if (values.password !== values.passwordConfirm) {
+      throw new Error('Passwords do not match');
+    }
 
-    const review = {...values, rating: Number(values.rating)};
+    const user = {username: values.username, password: values.password};
 
     try {
-      const { data } = await mutate({ variables: { review }})
+      const { data } = await mutate({ variables: { user }})
       console.log(data);
-      console.log(data.createReview.repository);
-      navigate(`/repository/${data.createReview.repository.id}`);
+      navigate('/');
     } catch (e) {
       console.log(e);
     }
