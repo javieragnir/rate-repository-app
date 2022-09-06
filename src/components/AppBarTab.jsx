@@ -11,6 +11,9 @@ const styles = StyleSheet.create({
   }
 })
 
+// looking at this later, how is this component pressable?
+// Are links pressable?
+
 const AppBarTab = ({ text, link }) => (
     <View style={styles.padding}>
       <Link to={link}>

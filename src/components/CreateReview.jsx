@@ -5,6 +5,8 @@ import * as yup from 'yup';
 import { Formik } from 'formik';
 import theme from '../theme';
 import { useNavigate } from 'react-router-native';
+import { useMutation } from '@apollo/client';
+import { CREATE_REVIEW } from '../graphql/mutations';
 
 const styles = StyleSheet.create({
   padding: {
@@ -52,7 +54,7 @@ const validationSchema = yup.object().shape({
     .typeError('Rating must be a number')
     .min(0)
     .max(100)
-    .required('Rating is required and must be a number from 0 to 100'),
+    .required('Rating is required'),
   text: yup
     .string()
     .optional(),
@@ -86,10 +88,20 @@ export const CreateReviewContainer = ({ onSubmit }) => {
 
 const CreateReview = () => {
   const navigate = useNavigate();
+  const [mutate] = useMutation(CREATE_REVIEW);
 
-  const onSubmit = () => {
-    console.log('test');
-    navigate('/');
+  const onSubmit = async values => {
+
+    const review = {...values, rating: Number(values.rating)};
+
+    try {
+      const { data } = await mutate({ variables: { review }})
+      console.log(data);
+      console.log(data.createReview.repository);
+      navigate(`/repository/${data.createReview.repository.id}`);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (
