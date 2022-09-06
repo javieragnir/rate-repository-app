@@ -3,6 +3,7 @@ import Text from './Text';
 import theme from '../theme';
 import { useParams } from 'react-router-native';
 import useRepository from '../hooks/useRepository';
+import * as Linking from 'expo-linking'
 
 const styles = StyleSheet.create({
   itemContainer: {
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+    marginTop: 10,
   },
   metric: {
     alignItems: 'center',
@@ -33,7 +35,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   languageTag: {
-    backgroundColor: '#0366d6',
+    backgroundColor: theme.colors.primary,
     borderRadius: 8,
     alignSelf: 'flex-start',
     padding: 6,
@@ -48,8 +50,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
+    marginTop: 20,
     padding: 10,
-    backgroundColor: theme.colors.appBar,
+    backgroundColor: theme.colors.primary,
     borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
@@ -57,23 +60,19 @@ const styles = StyleSheet.create({
   },
 })
 
-const LinkButton = () => {
+const LinkButton = ({ url }) => {
+  const onPress = () => {
+    Linking.openURL(url);
+  }
+
   return(
-    <Pressable>
-      <Text fontSize="subheading" fontWeight="bold" style={styles.whiteText}></Text>
+    <Pressable style={styles.button} onPress={onPress}>
+      <Text fontSize="subheading" fontWeight="bold" style={styles.whiteText}>Open in GitHub</Text>
     </Pressable>
   )
 }
 
-export const RepositoryView = () => {
-  let { id } = useParams();
-  
-  const { repository } = useRepository(id);
-
-  return <RepositoryItem {...repository} show={true} />
-}
-
-const RepositoryItem = ({ ownerAvatarUrl, fullName, description, language, forksCount, stargazersCount, ratingAverage, reviewCount, show = false }) => {
+const RepositoryItem = ({ ownerAvatarUrl, fullName, description, language, forksCount, stargazersCount, ratingAverage, reviewCount, url, show = false }) => {
   return (
     <View testID="repositoryItem" style={styles.itemContainer}>
       <View style={[styles.flexContainerRow, styles.largeBottomMartin]}>
@@ -92,7 +91,7 @@ const RepositoryItem = ({ ownerAvatarUrl, fullName, description, language, forks
         <RepositoryMetric number={reviewCount} text="Reviews"/>
         <RepositoryMetric number={ratingAverage} text="Rating"/>
       </View>
-      {show && <LinkButton />}
+      {show && <LinkButton url={url}/>}
     </View>
   )
 }
@@ -108,6 +107,14 @@ const RepositoryMetric = ({ number, text }) => {
       <Text color="textSecondary">{text}</Text>
     </View>
   )
+}
+
+export const RepositoryView = () => {
+  let { id } = useParams();
+  
+  const { repository } = useRepository(id);
+
+  return <RepositoryItem {...repository} show={true} />
 }
 
 export default RepositoryItem;

@@ -11,5 +11,6 @@ export const REPOSITORY_ITEM_DETAILS = gql`
     stargazersCount
     ratingAverage
     reviewCount
+    url
   }
 `
