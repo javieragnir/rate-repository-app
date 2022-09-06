@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Route, Routes, Navigate } from 'react-router-native'
 
 import RepositoryList from './RepositoryList'
@@ -21,6 +21,7 @@ const Main = () => {
       <AppBar />
       <Routes>
         <Route path="/" element={<RepositoryList />} exact />
+        <Route path="/repository/:id" element={<Text>test</Text>} exact />
         <Route path="/signin" element={<SignIn />} exact />
         <Route path="/signout" element={<SignOut />} exact />
         <Route path="*" element={<Navigate to="/" replace />} />
