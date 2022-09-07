@@ -2,7 +2,7 @@ import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
 import { useNavigate } from 'react-router-native';
-import { useState } from 'react';
+import RepositoryMenu from './RepositoryMenu';
 
 const styles = StyleSheet.create({
   separator: {
@@ -38,6 +38,8 @@ export const RepositoryListContainer = ({ repositories }) => {
       ItemSeparatorComponent={ItemSeparator}
       renderItem={item => <RenderItem {...item} navigate={navigate}/>}
       keyExtractor={item => item.id}
+      ListHeaderComponent={() => <RepositoryMenu />}
+      ListHeaderComponentStyle={{ zIndex: 10, elevation: 10 }}
     />
   );
 };
