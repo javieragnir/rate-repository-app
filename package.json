@@ -27,7 +27,6 @@
     "@apollo/client": "^3.6.9",
     "@expo/metro-config": "^0.3.22",
     "@react-native-async-storage/async-storage": "~1.15.0",
-    "@react-native-picker/picker": "^2.4.4",
     "dotenv": "^16.0.2",
     "expo": "~44.0.0",
     "expo-linking": "^3.2.2",

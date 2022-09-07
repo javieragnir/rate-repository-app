@@ -44,11 +44,13 @@ const styles = StyleSheet.create({
   }
 })
 
-const RepositoryMenu = () => {
+const RepositoryMenu = (props) => {
   const [visible, setVisible] = useState(false);
 
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
+
+  const setRepositorySort = props.setRepositorySort;
 
   return (
     <View style={styles.onTop}>
@@ -56,16 +58,16 @@ const RepositoryMenu = () => {
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'center',
+            justifyContent: 'flex-end',
           }}>
           <Menu
-            style={{ marginTop: -40 }}
+            style={{ marginTop: -40, right: 0, left: 'auto', }}
             visible={visible}
             onDismiss={closeMenu}
-            anchor={<Button onPress={openMenu} labelStyle={styles.button}>Show menu</Button>}>
-            <Menu.Item titleStyle={styles.titleStyle} onPress={() => {}} title="Item 1" />
-            <Menu.Item titleStyle={styles.titleStyle} onPress={() => {}} title="Item 2" />
-            <Menu.Item titleStyle={styles.titleStyle} onPress={() => {}} title="Item 3" />
+            anchor={<Button color="blue" onPress={openMenu} labelStyle={styles.button}>{props.repositorySort}</Button>}>
+            <Menu.Item titleStyle={styles.titleStyle} onPress={() => setRepositorySort('Latest repositories')} title="Latest repositories" />
+            <Menu.Item titleStyle={styles.titleStyle} onPress={() => setRepositorySort('Highest rated repositories')} title="Highest rated repositories" />
+            <Menu.Item titleStyle={styles.titleStyle} onPress={() => setRepositorySort('Lowest rated repositories')} title="Lowest rated repositories" />
           </Menu>
         </View>
       </Provider>

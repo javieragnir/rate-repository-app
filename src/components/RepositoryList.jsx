@@ -3,6 +3,7 @@ import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
 import { useNavigate } from 'react-router-native';
 import RepositoryMenu from './RepositoryMenu';
+import { useState } from 'react';
 
 const styles = StyleSheet.create({
   separator: {
@@ -24,7 +25,7 @@ const RenderItem = ({ item, navigate }) => {
   )
 };
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories, ...props }) => {
   const navigate = useNavigate();
 
   // get the nodes from the edges array
@@ -38,16 +39,18 @@ export const RepositoryListContainer = ({ repositories }) => {
       ItemSeparatorComponent={ItemSeparator}
       renderItem={item => <RenderItem {...item} navigate={navigate}/>}
       keyExtractor={item => item.id}
-      ListHeaderComponent={() => <RepositoryMenu />}
+      ListHeaderComponent={() => <RepositoryMenu repositorySort={props.repositorySort} setRepositorySort={props.setRepositorySort}/>}
       ListHeaderComponentStyle={{ zIndex: 10, elevation: 10 }}
     />
   );
 };
 
 const RepositoryList = () => {
-  const { repositories } = useRepositories();
+  const [repositorySort, setRepositorySort] = useState('Latest repositories');
 
-  return <RepositoryListContainer repositories={repositories} />;
+  const { repositories } = useRepositories(repositorySort);
+
+  return <RepositoryListContainer repositories={repositories} repositorySort={repositorySort} setRepositorySort={setRepositorySort} />;
 }
 
 export default RepositoryList;
