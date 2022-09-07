@@ -70,6 +70,8 @@ export class RepositoryListContainer extends React.Component {
         keyExtractor={item => item.id}
         ListHeaderComponent={this.renderHeader}
         ListHeaderComponentStyle={{ zIndex: 10, elevation: 10 }}
+        onEndReached={props.onEndReach}
+        onEndReachedThreshold={0.5}
       />
     );
   }
@@ -100,11 +102,41 @@ const RepositoryList = () => {
   const [searchText, setSearchText] = useState('');
   const [debouncedText] = useDebounce(searchText, 500);
 
-  const { repositories } = useRepositories(repositorySort, debouncedText);
+  let variables = {
+    first: 8,
+    searchKeyword: debouncedText,
+  }
+
+  switch (repositorySort) {
+    case 'Latest repositories':
+      variables = { ...variables, orderBy: 'CREATED_AT'}
+      break;
+    case 'Highest rated repositories':
+      variables = { ...variables, orderBy: 'RATING_AVERAGE', orderDirection: 'DESC' };
+      break;
+    case 'Lowest rated repositories':
+      variables = { ...variables, orderBy: 'RATING_AVERAGE', orderDirection: 'ASC' };
+      break;
+    default:
+      throw new Error('Something went wrong with the sorting filter');
+  }
+
+  const { repositories, fetchMore } = useRepositories(variables);
 
   const navigate = useNavigate();
 
-  return <RepositoryListContainer repositories={repositories} repositorySort={repositorySort} setRepositorySort={setRepositorySort} navigate={navigate} setSearchText={setSearchText}/>;
+  const onEndReach = () => {
+    fetchMore();
+  }
+
+  return <RepositoryListContainer
+      repositories={repositories}
+      repositorySort={repositorySort}
+      setRepositorySort={setRepositorySort}
+      navigate={navigate}
+      setSearchText={setSearchText}
+      onEndReach={onEndReach}
+    />;
 }
 
 export default RepositoryList;

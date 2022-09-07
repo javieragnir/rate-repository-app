@@ -5,17 +5,27 @@ export const GET_REPOSITORIES = gql`
   query Repositories(
       $orderDirection: OrderDirection,
       $orderBy: AllRepositoriesOrderBy,
-      $searchKeyword: String
+      $searchKeyword: String,
+      $after: String,
+      $first: Int
     ){
     repositories(
         orderDirection: $orderDirection,
-        orderBy: $orderBy, searchKeyword:
-        $searchKeyword
+        orderBy: $orderBy,
+        searchKeyword: $searchKeyword,
+        after: $after,
+        first: $first
       ){
       edges {
         node {
           ...RepositoryItemDetails
         }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        startCursor
+        hasNextPage
       }
     }
   }
