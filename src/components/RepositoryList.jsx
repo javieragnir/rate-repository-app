@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-native';
 import RepositoryMenu from './RepositoryMenu';
 import { useState } from 'react';
 import RepositorySearch from './RepositorySearch';
+import { useDebounce } from 'use-debounce'
 
 const styles = StyleSheet.create({
   separator: {
@@ -30,7 +31,7 @@ const RenderItem = ({ item, navigate }) => {
 const RepositoryListHeader = (props) => {
   return (
     <>
-      <RepositorySearch />
+      <RepositorySearch setSearchText={props.setSearchText}/>
       <RepositoryMenu repositorySort={props.repositorySort} setRepositorySort={props.setRepositorySort}/>
     </>
   )
@@ -44,14 +45,15 @@ export class RepositoryListContainer extends React.Component {
 
     return (
       <RepositoryListHeader
-      repositorySort={props.repositorySort} setRepositorySort={props.setRepositorySort}
+        repositorySort={props.repositorySort}
+        setRepositorySort={props.setRepositorySort}
+        setSearchText={props.setSearchText}
       />
     );
   };
 
   render() {
     const props = this.props;
-
 
     // get the nodes from the edges array
     const repositories = props.repositories;
@@ -95,10 +97,14 @@ export class RepositoryListContainer extends React.Component {
 
 const RepositoryList = () => {
   const [repositorySort, setRepositorySort] = useState('Latest repositories');
-  const { repositories } = useRepositories(repositorySort);
+  const [searchText, setSearchText] = useState('');
+  const [debouncedText] = useDebounce(searchText, 500);
+
+  const { repositories } = useRepositories(repositorySort, debouncedText);
+
   const navigate = useNavigate();
 
-  return <RepositoryListContainer repositories={repositories} repositorySort={repositorySort} setRepositorySort={setRepositorySort} navigate={navigate} />;
+  return <RepositoryListContainer repositories={repositories} repositorySort={repositorySort} setRepositorySort={setRepositorySort} navigate={navigate} setSearchText={setSearchText}/>;
 }
 
 export default RepositoryList;

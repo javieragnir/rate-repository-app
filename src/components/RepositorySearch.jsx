@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { Searchbar } from 'react-native-paper';
 
 
-const RepositorySearch = () => {
+const RepositorySearch = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const onChangeSearch = query => setSearchQuery(query);
+  const onChangeSearch = query => {
+    setSearchQuery(query)
+    props.setSearchText(query);
+  };
 
   return (
     <Searchbar

@@ -2,18 +2,18 @@ import { useQuery } from '@apollo/client';
 
 import { GET_REPOSITORIES } from '../graphql/queries';
 
-const useRepositories = (sort) => {
-  let variables;
+const useRepositories = (sort, searchKeyword = "") => {
+  let variables = {searchKeyword};
 
   switch (sort) {
     case 'Latest repositories':
-      variables = { orderBy: 'CREATED_AT'}
+      variables = { ...variables, orderBy: 'CREATED_AT'}
       break;
     case 'Highest rated repositories':
-      variables = { orderBy: 'RATING_AVERAGE', orderDirection: 'DESC' };
+      variables = { ...variables, orderBy: 'RATING_AVERAGE', orderDirection: 'DESC' };
       break;
     case 'Lowest rated repositories':
-      variables = { orderBy: 'RATING_AVERAGE', orderDirection: 'ASC' };
+      variables = { ...variables, orderBy: 'RATING_AVERAGE', orderDirection: 'ASC' };
       break;
     default:
       throw new Error('Something went wrong with the sorting filter');
