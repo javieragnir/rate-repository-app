@@ -64,7 +64,7 @@ const RepositoryMenu = (props) => {
             style={{ marginTop: -40, right: 0, left: 'auto', }}
             visible={visible}
             onDismiss={closeMenu}
-            anchor={<Button color="blue" onPress={openMenu} labelStyle={styles.button}>{props.repositorySort}</Button>}>
+            anchor={<Button theme={{ colors: {primary: '#0366d6'}}} onPress={openMenu} labelStyle={styles.button}>{props.repositorySort}</Button>}>
             <Menu.Item titleStyle={styles.titleStyle} onPress={() => setRepositorySort('Latest repositories')} title="Latest repositories" />
             <Menu.Item titleStyle={styles.titleStyle} onPress={() => setRepositorySort('Highest rated repositories')} title="Highest rated repositories" />
             <Menu.Item titleStyle={styles.titleStyle} onPress={() => setRepositorySort('Lowest rated repositories')} title="Lowest rated repositories" />

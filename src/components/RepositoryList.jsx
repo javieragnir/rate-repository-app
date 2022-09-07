@@ -5,6 +5,7 @@ import useRepositories from '../hooks/useRepositories';
 import { useNavigate } from 'react-router-native';
 import RepositoryMenu from './RepositoryMenu';
 import { useState } from 'react';
+import RepositorySearch from './RepositorySearch';
 
 const styles = StyleSheet.create({
   separator: {
@@ -28,7 +29,10 @@ const RenderItem = ({ item, navigate }) => {
 
 const RepositoryListHeader = (props) => {
   return (
-    <RepositoryMenu repositorySort={props.repositorySort} setRepositorySort={props.setRepositorySort}/>
+    <>
+      <RepositorySearch />
+      <RepositoryMenu repositorySort={props.repositorySort} setRepositorySort={props.setRepositorySort}/>
+    </>
   )
 }
 
