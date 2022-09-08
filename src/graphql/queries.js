@@ -41,7 +41,7 @@ export const GET_ME = gql`
   }
 `
 
-export const GET_REPOSITORY = gql`
+/* export const GET_REPOSITORY = gql`
   query GetRepository($id: ID!) {
     repository(id: $id) {
       ...RepositoryItemDetails
@@ -52,6 +52,37 @@ export const GET_REPOSITORY = gql`
             text
             rating
             createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
+    }
+  }
+  ${REPOSITORY_ITEM_DETAILS}
+` */
+
+export const GET_REPOSITORY = gql`
+  query GetRepository($id: ID!) {
+    repository(id: $id) {
+      ...RepositoryItemDetails
+      reviews {
+        totalCount
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+        }
+        edges {
+          cursor
+          node {
+            id
+            text
+            rating
+            createdAt
+            repositoryId
             user {
               id
               username
