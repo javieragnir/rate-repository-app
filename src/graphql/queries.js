@@ -59,6 +59,7 @@ export const GET_ME = gql`
             repository {
               name
               ownerName
+              id
             }
           }
         }

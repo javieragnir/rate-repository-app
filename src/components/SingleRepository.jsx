@@ -75,7 +75,7 @@ const SingleRepository = () => {
   let { id } = useParams();
 
   const { repository, fetchMore } = useRepository({
-    first: 6,
+    first: 8,
     id
   });
 
