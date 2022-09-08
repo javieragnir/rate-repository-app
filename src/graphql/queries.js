@@ -33,36 +33,39 @@ export const GET_REPOSITORIES = gql`
 `
 
 export const GET_ME = gql`
-  query {
+  query getCurrentUser($includeReviews: Boolean = false) {
     me {
       id
       username
-    }
-  }
-`
-
-/* export const GET_REPOSITORY = gql`
-  query GetRepository($id: ID!) {
-    repository(id: $id) {
-      ...RepositoryItemDetails
-      reviews {
+      createdAt
+      reviews @include(if: $includeReviews) {
+        pageInfo {
+          hasNextPage
+          startCursor
+          endCursor
+        }
         edges {
+          cursor
           node {
             id
             text
             rating
             createdAt
+            repositoryId
             user {
               id
               username
+            }
+            repository {
+              name
+              ownerName
             }
           }
         }
       }
     }
   }
-  ${REPOSITORY_ITEM_DETAILS}
-` */
+`
 
 export const GET_REPOSITORY = gql`
   query GetRepository($id: ID!, $after: String, $first: Int) {

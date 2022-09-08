@@ -1,9 +1,7 @@
 import { View, FlatList, StyleSheet } from 'react-native'
-import { useParams } from 'react-router-native';
-import useRepository from '../hooks/useRepository';
-import RepositoryItem from './RepositoryItem';
 import Text from './Text';
 import theme from '../theme';
+import useUserReviews from '../hooks/useUserReviews';
 
 const styles = StyleSheet.create({
   separator: {
@@ -36,16 +34,6 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const RepositoryInfo = ({ repository }) => {
-
-  return (
-    <View>
-      <RepositoryItem {...repository} show={true} />
-      <View style={styles.separator} />
-    </View>
-  )
-}
-
 const ReviewItem = ({ review }) => {
   const date = new Date(review.createdAt);
   let dd = date.getDay();
@@ -63,7 +51,7 @@ const ReviewItem = ({ review }) => {
         <Text fontWeight="bold" fontSize="subheading" style={styles.blueText}>{review.rating}</Text>
       </View>
       <View style={styles.reviewInfoContainer}>
-        <Text fontWeight="bold" fontSize="subheading" style={{ marginBottom: 3}}>{review.user.username}</Text>
+        <Text fontWeight="bold" fontSize="subheading" style={{ marginBottom: 3}}>{review.repository.ownerName}/{review.repository.name}</Text>
         <Text color="textSecondary" style={{ marginBottom: 5}}>{createdAt}</Text>
         <Text>{review.text}</Text>
       </View>
@@ -71,21 +59,16 @@ const ReviewItem = ({ review }) => {
   )
 };
 
-const SingleRepository = () => {
-  let { id } = useParams();
-
-  const { repository, fetchMore } = useRepository({
-    first: 6,
-    id
+const SingleUserReviews = () => {
+  let { reviews } = useUserReviews({
+    includeReviews: true,
   });
 
-  const reviews = repository
-    ? repository.reviews.edges.map((edge) => edge.node)
-    : [];
+  console.log(reviews)
 
-    const onEndReach = () => {
-      fetchMore();
-    }
+  reviews = reviews
+  ? reviews.edges.map((edge) => edge.node)
+  : [];
 
   return (
     <FlatList
@@ -93,12 +76,9 @@ const SingleRepository = () => {
       renderItem={({ item }) => <ReviewItem review={item} />}
       keyExtractor={({ id }) => id}
       ItemSeparatorComponent={ItemSeparator}
-      ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
-      onEndReached={onEndReach}
-      onEndReachedThreshold={0.5}
     />
   );
-};
 
+}
 
-export default SingleRepository
+export default SingleUserReviews;
