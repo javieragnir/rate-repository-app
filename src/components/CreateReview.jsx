@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.textSecondary,
     borderWidth: 1,
     borderRadius: 4,
-    height: 60
+    height: 60,
   },
   submitButton: {
     padding: 10,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 60
+    height: 60,
   },
   submitButtonText: {
     color: 'white',
@@ -66,7 +66,7 @@ const CreateReviewForm = ({ onSubmit }) => {
       <FormikTextInput style={styles.textInputStyle} name="ownerName" placeholder="Owner Name" placeholderTextColor={theme.colors.textSecondary}/>
       <FormikTextInput style={[styles.textInputStyle, styles.marginTop]} name="repositoryName" placeholder="Repository Name" placeholderTextColor={theme.colors.textSecondary} />
       <FormikTextInput style={[styles.textInputStyle, styles.marginTop]} name="rating" placeholder="Rating from 0 to 100" placeholderTextColor={theme.colors.textSecondary} />
-      <FormikTextInput style={[styles.textInputStyle, styles.marginTop]} name="text" placeholder="Review" placeholderTextColor={theme.colors.textSecondary} />
+      <FormikTextInput style={[styles.textInputStyle, styles.marginTop]} name="text" placeholder="Review" placeholderTextColor={theme.colors.textSecondary} multiline={true}/>
       <Pressable onPress={onSubmit} style={[styles.submitButton, styles.marginTop]}>
         <Text style={styles.submitButtonText} fontSize="subheading" fontWeight="bold">Create a review</Text>
       </Pressable>

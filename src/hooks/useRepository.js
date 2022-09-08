@@ -2,25 +2,38 @@ import { useQuery } from '@apollo/client';
 
 import { GET_REPOSITORY } from '../graphql/queries';
 
-const useRepository = (id) => {
-  // eslint-disable-next-line no-unused-vars
-  const { data, error, loading, refetch } = useQuery(GET_REPOSITORY, {
+const useRepository = (variables) => {
+  const { data, loading, refetch, fetchMore, ...result } = useQuery(GET_REPOSITORY, {
     fetchPolicy: 'cache-and-network',
-    variables: { id }
+    variables
   })
 
-  // not sure why, cant use async await on useQuery or else the
-  // RepositoryList component breaks (renders before loading data)
-  let repository;
-  if (data) {
-    repository = data.repository;
-  }
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && data?.repository.reviews.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        after: data.repository.reviews.pageInfo.endCursor,
+        ...variables,
+      },
+    });
+  };
 
   const fetchRepository = async () => {
-    await refetch({ id });
+    await refetch(variables);
   }
 
-  return { repository, loading, refetch: fetchRepository };
+  return {
+    repository: data?.repository,
+    loading,
+    refetch: fetchRepository,
+    fetchMore: handleFetchMore,
+    ...result,
+  };
 };
 
 export default useRepository;

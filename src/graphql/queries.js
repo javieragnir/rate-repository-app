@@ -65,10 +65,10 @@ export const GET_ME = gql`
 ` */
 
 export const GET_REPOSITORY = gql`
-  query GetRepository($id: ID!) {
+  query GetRepository($id: ID!, $after: String, $first: Int) {
     repository(id: $id) {
       ...RepositoryItemDetails
-      reviews {
+      reviews(after: $after, first: $first) {
         totalCount
         pageInfo {
           startCursor
